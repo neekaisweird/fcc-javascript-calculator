@@ -1,7 +1,14 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import { CalcContext } from '../context/CalcState';
+// '+', '-', 'x', '÷'
 const Equal = () => {
-  return <button>=</button>;
+  const { calculateResult } = useContext(CalcContext);
+
+  return (
+    <button id="equals" onClick={() => calculateResult()}>
+      =
+    </button>
+  );
 };
 
 export default Equal;

@@ -1,7 +1,14 @@
 import React from 'react';
+import Equation from './Equation';
+import Result from './Result';
 
 const Display = () => {
-  return <div>Display</div>;
+  return (
+    <div>
+      <Equation />
+      <Result />
+    </div>
+  );
 };
 
 export default Display;
