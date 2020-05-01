@@ -2,6 +2,10 @@ function handleNumber(state, action) {
   let last = state.equation[state.equation.length - 1];
   let ops = ['+', '-', '*', '/'];
   let equation = [...state.equation];
+  // need to handle zeroes
+  // if (+action.num === 0 && equation.length === 0) {
+  //   return { ...state, equation };
+  // }
   // if equation is empty or last is an operator, push on to array
   if (state.equation.length === 0 || ops.indexOf(last) >= 0) {
     equation.push(action.num);
@@ -42,7 +46,10 @@ function handleDecimal(state, action) {
   let last = state.equation[state.equation.length - 1];
   let equation = [...state.equation];
   // if last element has a decimal in it
-  if (last.indexOf('.') < 0) {
+  if (equation.length === 0) {
+    equation.push('0.');
+  }
+  if (last && last.indexOf('.') < 0) {
     equation.pop();
     equation.push(last.concat('', '.'));
   }
@@ -87,7 +94,7 @@ function calculateResult(state, action) {
 
   evaluate(formula, '*', '/');
   evaluate(formula, '+', '-');
-  let result = formula[0];
+  let result = formula[0].toFixed(4);
   return { ...state, result, equation: [] };
 }
 export default (state, action) => {
