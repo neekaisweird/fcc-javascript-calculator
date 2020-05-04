@@ -1,13 +1,21 @@
 import React, { useContext } from 'react';
 import { CalcContext } from '../context/CalcState';
-// '+', '-', 'x', '÷'
+import styled from 'styled-components';
+
+const EqualsButton = styled.button`
+  grid-area: equals;
+  color: #fff;
+  background-color: #1f2b37;
+  font-size: 2rem;
+`;
+
 const Equal = () => {
   const { calculateResult } = useContext(CalcContext);
 
   return (
-    <button id="equals" onClick={() => calculateResult()}>
+    <EqualsButton id="equals" onClick={() => calculateResult()}>
       =
-    </button>
+    </EqualsButton>
   );
 };
 

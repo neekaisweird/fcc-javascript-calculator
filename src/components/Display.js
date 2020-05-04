@@ -4,10 +4,10 @@ import Result from './Result';
 
 const Display = () => {
   return (
-    <div>
+    <>
       <Equation />
       <Result />
-    </div>
+    </>
   );
 };
 

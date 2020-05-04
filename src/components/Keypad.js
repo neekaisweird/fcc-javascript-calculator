@@ -7,13 +7,13 @@ import Equal from './Equal';
 
 const Keypad = () => {
   return (
-    <div>
+    <>
       <Numbers />
       <Operators />
       <Decimal />
       <Clear />
       <Equal />
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,13 @@
 import React, { useContext } from 'react';
 import { CalcContext } from '../context/CalcState';
+import styled from 'styled-components';
+
+const Number = styled.button`
+  grid-area: ${prop => prop.id};
+  background-color: #f0f1f3;
+  color: #1f2b37;
+  font-size: 2rem;
+`;
 
 const defaultNums = [
   { id: 'zero', num: 0 },
@@ -17,17 +25,18 @@ const Numbers = () => {
   const { handleNumber } = useContext(CalcContext);
 
   return (
-    <div>
+    <>
       {defaultNums.map(val => (
-        <button
+        <Number
+          className="num"
           id={val.id}
           key={val.id}
           onClick={() => handleNumber(val.num.toString())}
         >
           {val.num}
-        </button>
+        </Number>
       ))}
-    </div>
+    </>
   );
 };
 
