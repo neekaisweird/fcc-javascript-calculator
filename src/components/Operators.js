@@ -1,18 +1,11 @@
 import React, { useContext } from 'react';
 import { CalcContext } from '../context/CalcState';
-import styled from 'styled-components';
-
-const Operator = styled.button`
-  grid-area: ${prop => prop.id};
-  background-color: #1d7b72;
-  color: #fff;
-  font-size: 2rem;
-`;
+import { Button } from '../styles';
 
 const defaultOps = [
   { id: 'add', op: '+' },
   { id: 'subtract', op: '-' },
-  { id: 'multiply', op: '*' },
+  { id: 'multiply', op: 'x' },
   { id: 'divide', op: '/' }
 ];
 
@@ -21,14 +14,16 @@ const Operators = () => {
   return (
     <>
       {defaultOps.map(val => (
-        <Operator
+        <Button
+          style={{ backgroundColor: '#1d7b72', color: '#fff' }}
+          whiteHover
           className="op"
           id={val.id}
           key={val.id}
           onClick={() => handleOperator(val.op)}
         >
           {val.op}
-        </Operator>
+        </Button>
       ))}
     </>
   );

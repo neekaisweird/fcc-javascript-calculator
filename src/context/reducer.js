@@ -1,6 +1,6 @@
 function handleNumber(state, action) {
   let last = state.equation[state.equation.length - 1];
-  let ops = ['+', '-', '*', '/'];
+  let ops = ['+', '-', 'x', '/'];
   let equation = [...state.equation];
   // need to handle zeroes
   // if (+action.num === 0 && equation.length === 0) {
@@ -19,7 +19,7 @@ function handleNumber(state, action) {
 
 function handleOperator(state, action) {
   let last = state.equation[state.equation.length - 1];
-  let ops = ['+', '-', '*', '/'];
+  let ops = ['+', '-', 'x', '/'];
   let equation = [...state.equation];
   if (state.equation.length === 0) {
     if (action.op === '-') {
@@ -61,14 +61,14 @@ function calculateResult(state, action) {
   //handle negative numbers first
   formula.forEach((val, i) => {
     let elementBefore = formula[i - 1];
-    let ops = ['+', '-', '*', '/'];
+    let ops = ['+', '-', 'x', '/'];
     if (val === '-' && ops.indexOf(elementBefore) >= 0) {
       let negativeNum = '-'.concat('', formula[i + 1]);
       formula.splice(i, 2, negativeNum);
     }
   });
   let operations = {
-    '*': (arr, i) => {
+    x: (arr, i) => {
       arr.splice(i - 1, 3, +arr[i - 1] * +arr[i + 1]);
     },
     '/': (arr, i) => {
@@ -91,9 +91,11 @@ function calculateResult(state, action) {
       }
     }
   }
+  while (formula.length > 1) {
+    evaluate(formula, 'x', '/');
+    evaluate(formula, '+', '-');
+  }
 
-  evaluate(formula, '*', '/');
-  evaluate(formula, '+', '-');
   let result = formula[0].toFixed(4);
   return { ...state, result, equation: [] };
 }
