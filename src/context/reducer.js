@@ -1,13 +1,19 @@
 function handleNumber(state, action) {
+  if ([...state.equation].join('').length >= 15) {
+    return { ...state, maxInput: true };
+  }
   let last = state.equation[state.equation.length - 1];
   let ops = ['+', '-', 'x', '/'];
   let equation = [...state.equation];
+
   // need to handle zeroes
-  // if (+action.num === 0 && equation.length === 0) {
-  //   return { ...state, equation };
-  // }
-  // if equation is empty or last is an operator, push on to array
-  if (state.equation.length === 0 || ops.indexOf(last) >= 0) {
+  if (
+    (+action.num === 0 && state.equation.length === 0) ||
+    (+action.num === 0 && ops.indexOf(last) >= 0)
+  ) {
+    return { ...state, equation };
+  } else if (state.equation.length === 0 || ops.indexOf(last) >= 0) {
+    // if equation is empty or last is an operator, push on to array
     equation.push(action.num);
   } else {
     // if last is a number, concat it with that
@@ -18,10 +24,17 @@ function handleNumber(state, action) {
 }
 
 function handleOperator(state, action) {
+  if ([...state.equation].join('').length >= 15) {
+    return { ...state, maxInput: true };
+  }
   let last = state.equation[state.equation.length - 1];
   let ops = ['+', '-', 'x', '/'];
   let equation = [...state.equation];
-  if (state.equation.length === 0) {
+
+  if (state.result && state.equation.length === 0) {
+    equation.push(state.result);
+    equation.push(action.op);
+  } else if (state.equation.length === 0) {
     if (action.op === '-') {
       //make next element === '-'
       equation = ['-'];
@@ -43,13 +56,16 @@ function handleOperator(state, action) {
   return { ...state, equation };
 }
 function handleDecimal(state, action) {
+  if ([...state.equation].join('').length >= 15) {
+    return { ...state, maxInput: true };
+  }
   let last = state.equation[state.equation.length - 1];
   let equation = [...state.equation];
   // if last element has a decimal in it
-  if (equation.length === 0) {
+  if (equation.length === 0 || !+last) {
     equation.push('0.');
   }
-  if (last && last.indexOf('.') < 0) {
+  if (+last && last.indexOf('.') < 0) {
     equation.pop();
     equation.push(last.concat('', '.'));
   }
@@ -62,7 +78,10 @@ function calculateResult(state, action) {
   formula.forEach((val, i) => {
     let elementBefore = formula[i - 1];
     let ops = ['+', '-', 'x', '/'];
-    if (val === '-' && ops.indexOf(elementBefore) >= 0) {
+    if (
+      (val === '-' && !elementBefore) ||
+      (val === '-' && ops.indexOf(elementBefore) >= 0)
+    ) {
       let negativeNum = '-'.concat('', formula[i + 1]);
       formula.splice(i, 2, negativeNum);
     }
@@ -95,9 +114,16 @@ function calculateResult(state, action) {
     evaluate(formula, 'x', '/');
     evaluate(formula, '+', '-');
   }
+  // for testing FCC
+  // evaluate(formula, 'x', '/');
+  // evaluate(formula, '+', '-');
+  // let result;
+  // if (+formula[0] === formula[0]) {
+  //   result = parseFloat(formula[0].toFixed(4));
+  // }
 
-  let result = formula[0].toFixed(4);
-  return { ...state, result, equation: [] };
+  let result = parseFloat(formula[0].toFixed(4));
+  return { ...state, result, equation: [], maxInput: false };
 }
 export default (state, action) => {
   switch (action.type) {
@@ -113,7 +139,8 @@ export default (state, action) => {
       return {
         ...state,
         equation: [],
-        result: 0
+        result: 0,
+        maxInput: false
       };
     default:
       return state;

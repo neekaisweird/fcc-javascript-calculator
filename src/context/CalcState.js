@@ -3,7 +3,8 @@ import reducer from './reducer';
 
 const initialState = {
   equation: [],
-  result: null
+  result: null,
+  maxInput: false
 };
 
 export const CalcContext = createContext(initialState);
@@ -45,6 +46,7 @@ export const CalcProvider = ({ children }) => {
       value={{
         equation: state.equation,
         result: state.result,
+        maxInput: state.maxInput,
         handleNumber,
         handleOperator,
         handleDecimal,
