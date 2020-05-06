@@ -30,23 +30,24 @@ function handleOperator(state, action) {
   let last = state.equation[state.equation.length - 1];
   let ops = ['+', '-', 'x', '/'];
   let equation = [...state.equation];
-
+  // use result if equation is empty
   if (state.result && state.equation.length === 0) {
     equation.push(state.result);
     equation.push(action.op);
-  } else if (state.equation.length === 0) {
-    if (action.op === '-') {
-      //make next element === '-'
-      equation = ['-'];
-    }
+  } else if (state.equation.length === 0 && action.op === '-') {
+    //make next element === '-'
+    equation = ['-'];
   } else if (ops.indexOf(last) >= 0) {
     //if the last element in the equation is an operator
     if (action.op === '-') {
       //make next element === '-'
       equation.push('-');
     } else {
-      //replace last element with new operator
+      //replace last element with new operator and check if there's another operator
       equation.pop();
+      if (ops.indexOf(equation[equation.length - 1]) >= 0) {
+        equation.pop();
+      }
       equation.push(action.op);
     }
   } else if (ops.indexOf(last) < 0) {
@@ -74,10 +75,14 @@ function handleDecimal(state, action) {
 }
 function calculateResult(state, action) {
   let formula = [...state.equation];
+  let ops = ['+', '-', 'x', '/'];
+  //if last entry is an operator, pop off
+  if (ops.indexOf(formula[formula.length - 1]) >= 0) {
+    formula.pop();
+  }
   //handle negative numbers first
   formula.forEach((val, i) => {
     let elementBefore = formula[i - 1];
-    let ops = ['+', '-', 'x', '/'];
     if (
       (val === '-' && !elementBefore) ||
       (val === '-' && ops.indexOf(elementBefore) >= 0)
@@ -86,6 +91,10 @@ function calculateResult(state, action) {
       formula.splice(i, 2, negativeNum);
     }
   });
+  //if formula is one input
+  if (formula.length === 1) {
+    return { ...state, result: formula[0], equation: [], maxInput: false };
+  }
   let operations = {
     x: (arr, i) => {
       arr.splice(i - 1, 3, +arr[i - 1] * +arr[i + 1]);
@@ -114,14 +123,6 @@ function calculateResult(state, action) {
     evaluate(formula, 'x', '/');
     evaluate(formula, '+', '-');
   }
-  // for testing FCC
-  // evaluate(formula, 'x', '/');
-  // evaluate(formula, '+', '-');
-  // let result;
-  // if (+formula[0] === formula[0]) {
-  //   result = parseFloat(formula[0].toFixed(4));
-  // }
-
   let result = parseFloat(formula[0].toFixed(4));
   return { ...state, result, equation: [], maxInput: false };
 }
