@@ -40,6 +40,11 @@ export const CalcProvider = ({ children }) => {
       type: 'CLEAR'
     });
   }
+  function backspace() {
+    dispatch({
+      type: 'BACKSPACE'
+    });
+  }
 
   return (
     <CalcContext.Provider
@@ -51,7 +56,8 @@ export const CalcProvider = ({ children }) => {
         handleOperator,
         handleDecimal,
         calculateResult,
-        clear
+        clear,
+        backspace
       }}
     >
       {children}

@@ -2,7 +2,8 @@ import React from 'react';
 import Numbers from './Numbers';
 import Operators from './Operators';
 import Decimal from './Decimal';
-import Clear from './Clear';
+import AllClear from './AllClear';
+import ClearEntry from './ClearEntry';
 import Equal from './Equal';
 
 const Keypad = () => {
@@ -11,7 +12,8 @@ const Keypad = () => {
       <Numbers />
       <Operators />
       <Decimal />
-      <Clear />
+      <AllClear />
+      <ClearEntry />
       <Equal />
     </>
   );

@@ -21,11 +21,11 @@ const Grid = styled.div`
   grid-gap: 1px;
   grid-template-areas:
     'display display display display'
-    'clear clear divide multiply'
-    'seven eight nine subtract'
-    'four five six add'
-    'three two one equals'
-    'zero zero decimal equals';
+    'clear clear backspace divide'
+    'seven eight nine multiply'
+    'four five six subtract'
+    'three two one add'
+    'zero decimal equals equals';
   border: 1px rgba(130, 137, 137, 0.5) solid;
   box-shadow: 0px 10px 14px 3px rgba(0, 0, 0, 0.26);
 `;

@@ -125,6 +125,13 @@ function calculateResult(state, action) {
   let result = parseFloat(formula[0].toFixed(4));
   return { ...state, result, equation: [], maxInput: false };
 }
+
+function backspace(state, action) {
+  let equation = [...state.equation];
+  equation.pop();
+  return { ...state, equation, maxInput: false };
+}
+
 export default (state, action) => {
   switch (action.type) {
     case 'HANDLE_NUMBER':
@@ -142,6 +149,8 @@ export default (state, action) => {
         result: 0,
         maxInput: false
       };
+    case 'BACKSPACE':
+      return backspace(state, action);
     default:
       return state;
   }
