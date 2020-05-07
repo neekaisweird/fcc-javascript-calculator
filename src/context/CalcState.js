@@ -12,7 +12,6 @@ export const CalcContext = createContext(initialState);
 export const CalcProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // functions
   function handleNumber(num) {
     dispatch({
       type: 'HANDLE_NUMBER',

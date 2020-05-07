@@ -5,14 +5,21 @@ import styled from 'styled-components';
 
 const MaxInput = styled.div`
   font-size: 1.5rem;
-  color: red;
+  text-transform: uppercase;
+  letter-spacing: 18px;
 `;
 
 const Result = () => {
-  const { result, maxInput } = useContext(CalcContext);
+  const { result, maxInput, equation } = useContext(CalcContext);
   return (
     <Display style={{ fontSize: '2.5rem', fontWeight: '300' }} id="display">
-      {maxInput ? <MaxInput>Max Input</MaxInput> : result}
+      {maxInput ? (
+        <MaxInput>Max Input</MaxInput>
+      ) : result || result === 0 ? (
+        result
+      ) : (
+        equation[equation.length - 1]
+      )}
     </Display>
   );
 };

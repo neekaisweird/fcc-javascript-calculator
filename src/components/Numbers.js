@@ -14,14 +14,13 @@ const defaultNums = [
   { id: 'eight', num: 8 },
   { id: 'nine', num: 9 }
 ];
+
 const Numbers = () => {
   const { handleNumber } = useContext(CalcContext);
-
   return (
     <>
       {defaultNums.map(val => (
         <Button
-          className="num"
           id={val.id}
           key={val.id}
           onClick={() => handleNumber(val.num.toString())}

@@ -30,22 +30,12 @@ const Grid = styled.div`
   box-shadow: 0px 10px 14px 3px rgba(0, 0, 0, 0.26);
 `;
 
-const DisplayWrapper = styled.div`
-  grid-area: display;
-  height: 130px;
-  background-color: #b5c7c7;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
 const Calculator = () => {
   return (
     <CalcProvider>
       <Borders>
         <Grid>
-          <DisplayWrapper>
-            <Display />
-          </DisplayWrapper>
+          <Display />
           <Keypad />
         </Grid>
       </Borders>

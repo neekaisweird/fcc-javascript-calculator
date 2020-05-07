@@ -17,7 +17,6 @@ const Operators = () => {
         <Button
           style={{ backgroundColor: '#1d7b72', color: '#fff' }}
           whiteHover
-          className="op"
           id={val.id}
           key={val.id}
           onClick={() => handleOperator(val.op)}
