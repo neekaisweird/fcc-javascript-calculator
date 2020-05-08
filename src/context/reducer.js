@@ -42,7 +42,7 @@ function handleOperator(state, action) {
     }
   } else if (ops.indexOf(last) >= 0) {
     //if the last element in the equation is an operator
-    if (action.op === '-') {
+    if (action.op === '-' && last !== '-') {
       equation.push('-');
     } else {
       //replace last element with new operator and check if there's another operator
@@ -111,7 +111,7 @@ function calculateResult(state) {
     },
     '-': (arr, i) => {
       arr.splice(i - 1, 3, +arr[i - 1] - +arr[i + 1]);
-    }
+    },
   };
   function evaluate(arr, firstOp, secondOp) {
     for (let i = 0; i < formula.length; i++) {
@@ -152,7 +152,7 @@ export default (state, action) => {
         ...state,
         equation: ['0'],
         result: null,
-        maxInput: false
+        maxInput: false,
       };
     case 'BACKSPACE':
       return backspace(state);
