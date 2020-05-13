@@ -78,6 +78,9 @@ function handleDecimal(state) {
   return { ...state, equation, result: null };
 }
 function calculateResult(state) {
+  if (state.equation.length === 0) {
+    return { ...state };
+  }
   let formula = [...state.equation];
   let ops = ['+', '-', 'x', '/'];
   //if last input is an operator, pop off
